@@ -48,9 +48,10 @@ for (const [zoom, res] of Object.entries(ZOOM_TO_H3_RES_CORRESPONDENCE)) {
 }
 
 const getH3ResForMapZoom = (mapZoom) => {
-  return (
-    ZOOM_TO_H3_RES_CORRESPONDENCE[mapZoom] ?? Math.floor((mapZoom - 1) * 0.7)
-  );
+  return 14;
+  // return (
+  //   ZOOM_TO_H3_RES_CORRESPONDENCE[mapZoom] ?? Math.floor((mapZoom - 1) * 0.7)
+  // );
 };
 
 const h3BoundsToPolygon = (lngLatH3Bounds) => {
@@ -139,7 +140,11 @@ var app = new Vue({
       for (const h3id of h3s) {
         const polygonLayer = L.layerGroup().addTo(hexLayer);
 
-        const isSelected = this.searchH3Ids.split(",").some((e) => h3id === e);
+        // const isSelected = this.searchH3Ids.split(",").some((e) => h3id === e);
+        const start = this.searchH3Ids.split(",")[0];
+        const end = this.searchH3Ids.split(",")[1];
+        const isSelected = start <= h3id && h3id <= end;
+        console.log(isSelected);
 
         const style = isSelected ? { fillColor: "orange" } : {};
 
